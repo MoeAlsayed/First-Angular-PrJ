@@ -1,6 +1,7 @@
 <h2>My Heroes</h2>
 
 <ul class="heroes">
+    <!-- this directive allows you to display items from a collection of items into this tamplate -->
   <li *ngFor="let hero of heroes" 
       [class.selected]="hero === selectedHero" 
       (click)="onSelect(hero)">

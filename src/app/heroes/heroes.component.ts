@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../hero';
-import { HEROES } from '../mock-heroes';
+import { HeroService } from '../hero.service';
+// import { HEROES } from '../mock-heroes';
 
 @Component({
   selector: 'app-heroes',
@@ -9,13 +10,24 @@ import { HEROES } from '../mock-heroes';
 })
 export class HeroesComponent implements OnInit {
   selectedHero: Hero;
-  heroes = HEROES;
+  // I won't need HEROES because i ues now HeroService
+  // heroes = HEROES; =>
+  heroes: Hero[];
 
-  constructor() { }
+    // Add a private heroService parameter of type HeroService to the constructor
+  constructor(private heroService: HeroService) { }
+  // The parameter simultaneously defines a private heroService property and identifies it as a HeroService injection site.
 
   ngOnInit() {
+    // https://angular.io/tutorial/toh-pt4#call-it-in-ngoninit
+    this.getHeroes();
   }
   onSelect(hero: Hero): void {
     this.selectedHero = hero;
+  }
+  // Create a function to retrieve the heroes from the service.
+  getHeroes(): void {
+    this.heroService.getHeroes()
+    .subscribe(heroes => this.heroes = heroes);
   }
 }
